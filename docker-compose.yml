@@ -1,0 +1,26 @@
+version: "2"
+services:
+  lnmp:
+    restart: always
+    image: cloudwhite/lnmp:v3
+    container_name: lnmp3 
+    privileged: true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "6379:6379"
+    volumes:
+      - ./conf/nginx/conf.d/:/usr/local/nginx/conf/conf.d/:ro
+      - ./conf/nginx/nginx.conf:/usr/local/nginx/conf/nginx.conf:ro
+      - ./conf/hosts:/etc/hosts:ro
+      - ./log/nginx/:/var/log/nginx/:rw
+      - ./www/:/var/www/:rw
+    command: []
+    environment:
+      - TZ=Asia/Shanghai 
+      - PATH=$PATH:$HOME/bin:/usr/local/php/bin/:/usr/local/nginx/bin/
+    networks:
+      - net-php
+ 
+networks:
+  net-php:
